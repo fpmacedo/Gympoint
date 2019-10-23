@@ -26,7 +26,7 @@ class UserController {
     }
 
     // verifica se ja existe algum email igual no BD
-    const userExists = await User.findOne({ where: { email: req.body.email } });
+    const userExists = await User.findOne({ where: { email } });
 
     if (userExists) {
       // caso ja exista retorna ao user bad request
