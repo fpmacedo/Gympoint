@@ -69,7 +69,7 @@ class StudentsController {
     // buscar email
     const { email } = req.body;
 
-    // busca id na req.params
+    // busca id na req.params http://localhost:3333/students/4 onde 4 = index
     const { index } = req.params;
     // busca o usuario dentro do BD pela primary key que definimos como ID
     const students = await Students.findByPk(index);
