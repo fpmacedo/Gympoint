@@ -6,18 +6,21 @@ import { Router } from 'express';
 
 // importa o UserController
 import UserController from './app/controllers/UserController';
+import StudentsController from './app/controllers/StudentsController';
 import SessionController from './app/controllers/SessionController';
 import authMiddleware from './app/middleware/auth';
 
 // cria variavel routes que ira conter o metodo Routes
 const routes = new Router();
 
-routes.post('/users', UserController.store);
+// routes.post('/users', UserController.store);
 routes.post('/sessions', SessionController.store);
 
 // routes para definir o middleware para todas as rotas daqui para baixo
 routes.use(authMiddleware);
 routes.put('/users', UserController.update);
+routes.post('/students', StudentsController.store);
+routes.put('/students/:index', StudentsController.update);
 
 // routes.get('/', async (req, res) => {
 //   const user = await User.create({
