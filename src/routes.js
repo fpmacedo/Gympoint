@@ -9,6 +9,7 @@ import UserController from './app/controllers/UserController';
 import StudentsController from './app/controllers/StudentsController';
 import SessionController from './app/controllers/SessionController';
 import PlansController from './app/controllers/PlansController';
+import EnrollmentController from './app/controllers/EnrollmentController';
 import authMiddleware from './app/middleware/auth';
 
 // cria variavel routes que ira conter o metodo Routes
@@ -27,6 +28,8 @@ routes.put('/students/:index', StudentsController.update);
 routes.post('/plans', PlansController.store);
 routes.put('/plans/:id', PlansController.update);
 routes.delete('/plans/:id', PlansController.delete);
+// rotas para as matriculas
+routes.post('/enrollments', EnrollmentController.store);
 
 // routes.get('/', async (req, res) => {
 //   const user = await User.create({

@@ -73,6 +73,11 @@ class StudentsController {
     const { index } = req.params;
     // busca o usuario dentro do BD pela primary key que definimos como ID
     const students = await Students.findByPk(index);
+
+    if (!students) {
+      // caso ja exista retorna ao user bad request
+      return res.status(400).json({ error: 'Student does not exists.' });
+    }
     // verifica se o e-mail novo e diferente do atual
     if (email !== students.email) {
       const studentExists = await Students.findOne({ where: { email } });
