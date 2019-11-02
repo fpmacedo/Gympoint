@@ -20,7 +20,7 @@ class Enrollment extends Model {
     return this;
   }
 
-  // cria o metodo para associar o campo avatar_id ao model do usuario
+  // cria o metodo para associar o campo ao model de matricula
   static associate(models) {
     this.belongsTo(models.Students, {
       foreignKey: 'student_id',

@@ -30,7 +30,9 @@ routes.put('/plans/:id', PlansController.update);
 routes.delete('/plans/:id', PlansController.delete);
 // rotas para as matriculas
 routes.post('/enrollments', EnrollmentController.store);
-
+routes.get('/enrollments', EnrollmentController.index);
+routes.put('/enrollments/:id', EnrollmentController.update);
+routes.delete('/enrollments/:id', EnrollmentController.delete);
 // routes.get('/', async (req, res) => {
 //   const user = await User.create({
 //     name: 'Filipe Macedo',
