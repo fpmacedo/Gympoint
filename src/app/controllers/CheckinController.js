@@ -1,7 +1,8 @@
 import { Op } from 'sequelize';
-import { subDays, parseISO } from 'date-fns';
+import { subDays } from 'date-fns';
 import Checkin from '../models/Checkin';
 import Students from '../models/Students';
+import Enrollment from '../models/Enrollment';
 
 class CheckinController {
   async store(req, res) {
@@ -13,15 +14,18 @@ class CheckinController {
     if (!student) {
       return res.status(400).json({ error: 'Student does not exists.' });
     }
-    // encontra o ultimo checkin feito pelo usuario
-    // const lastCheckin = await Checkin.findOne({
-    //   where: {
-    //     student_id: student.id,
-    //   },
-    //   attributes: ['student_id', 'created_at'],
-    //   order: ['created_at'],
-    // });
-    // verifica se o numero de checkins nos ultimos 7 dias e menor que cinco
+
+    // busca o id do aluno
+    const enrollment = await Enrollment.findOne({
+      where: { student_id: id },
+    });
+    // verifica se o aluno realmente tem uma matricula
+    if (!enrollment) {
+      return res
+        .status(400)
+        .json({ error: 'Student does not have an enrollment.' });
+    }
+
     const checkins = await Checkin.findAll({
       where: {
         student_id: id,
