@@ -11,6 +11,7 @@ import SessionController from './app/controllers/SessionController';
 import PlansController from './app/controllers/PlansController';
 import EnrollmentController from './app/controllers/EnrollmentController';
 import authMiddleware from './app/middleware/auth';
+import CheckinController from './app/controllers/CheckinController';
 
 // cria variavel routes que ira conter o metodo Routes
 const routes = new Router();
@@ -33,14 +34,9 @@ routes.post('/enrollments', EnrollmentController.store);
 routes.get('/enrollments', EnrollmentController.index);
 routes.put('/enrollments/:id', EnrollmentController.update);
 routes.delete('/enrollments/:id', EnrollmentController.delete);
-// routes.get('/', async (req, res) => {
-//   const user = await User.create({
-//     name: 'Filipe Macedo',
-//     email: 'lipe_macedo@msn.com',
-//     password_hash: '119e84354987',
-//   });
 
-//   return res.json(user);
-// });
+// rotas para o checkin dos alunos
+routes.post('/students/:id/checkins', CheckinController.store);
+routes.get('/students/:id/checkins', CheckinController.index);
 
 export default routes;

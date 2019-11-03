@@ -3,14 +3,12 @@
 
 // importa o modelo usuario
 import * as Yup from 'yup';
-import { addMonths, parseISO, format } from 'date-fns';
-import pt from 'date-fns/locale/pt';
+import { addMonths, parseISO } from 'date-fns';
 import Enrollment from '../models/Enrollment';
 import Plans from '../models/Plans';
 import Students from '../models/Students';
 import Queue from '../../lib/Queue';
 import EnrollmentMail from '../jobs/EnrollmentMail';
-import Mail from '../../lib/Mail';
 
 // importa o yup para fazer validacoes
 
@@ -63,22 +61,8 @@ class EnrollmentController {
 
     const { end_date, price } = await Enrollment.create(req.body);
 
+    // chama a fila para enviar emails
     await Queue.add(EnrollmentMail.key, { student, plan, end_date });
-
-    /*
-    await Mail.sendMail({
-      to: `${student.name} <${student.email}`,
-      subject: 'Confirmacao de matricula',
-      template: 'enrollment',
-      context: {
-        student: student.name,
-        plan: plan.title,
-        date: format(end_date, "'dia' dd 'de'MMMM' de 'yyyy'", {
-          locale: pt,
-        }),
-        price: plan.price,
-      },
-    }); */
 
     return res.json({
       student_id,
