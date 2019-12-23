@@ -10,7 +10,7 @@ class SessionController {
   async store(req, res) {
     // cria um objeto yup para a verificacao dos dados recebidos
     const schema = Yup.object().shape({
-      name: Yup.string().required(),
+      name: Yup.string(),
       email: Yup.string()
         .email()
         .required(),

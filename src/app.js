@@ -1,6 +1,7 @@
 // arquivo onde e configurado o servidor express
 // importar express
 import express from 'express';
+import cors from 'cors';
 import routes from './routes';
 
 // chama o arquivo de database index.js
@@ -18,6 +19,7 @@ class App {
 
   // metodo middlewares
   middlewares() {
+    this.server.use(cors());
     this.server.use(express.json());
   }
 
