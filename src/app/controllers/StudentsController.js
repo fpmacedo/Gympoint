@@ -3,19 +3,22 @@
 
 // importa o modelo usuario
 import * as Yup from 'yup';
+import { Op } from 'sequelize';
 import Students from '../models/Students';
 // importa o yup para fazer validacoes
 
 // cria a classe que sera exportada
 class StudentsController {
   async index(req, res) {
-    const { q } = req.query;
+    const { name } = req.query;
 
-    if (q) {
-      const students = await Students.findAll({ where: { name: q } });
-      return res.json(students);
-    }
-    const students = await Students.findAll();
+    const students = await Students.findAll({
+      where: {
+        name: {
+          [Op.like]: `%${name}`,
+        },
+      },
+    });
     return res.json(students);
   }
 

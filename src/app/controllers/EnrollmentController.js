@@ -126,7 +126,6 @@ class EnrollmentController {
     if (!enrollment) {
       return res.status(400).json(`Enrollment id: ${id} does not exist`);
     }
-    // deleta o plano do banco de dados
     enrollment.destroy();
     // retorna para o usuario
     return res.json(`Enrollment ${enrollment.id} deleted`);
