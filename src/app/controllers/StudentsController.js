@@ -8,6 +8,17 @@ import Students from '../models/Students';
 
 // cria a classe que sera exportada
 class StudentsController {
+  async index(req, res) {
+    const { q } = req.query;
+
+    if (q) {
+      const students = await Students.findAll({ where: { name: q } });
+      return res.json(students);
+    }
+    const students = await Students.findAll();
+    return res.json(students);
+  }
+
   // informa que o store metodo de armazenar e assincrono
   async store(req, res) {
     // cria um objeto yup para a verificacao dos dados recebidos

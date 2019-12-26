@@ -33,6 +33,7 @@ routes.get('/students/:id/help-orders', HelpOrdersController.index);
 // routes para definir o middleware para todas as rotas daqui para baixo
 routes.use(authMiddleware);
 routes.put('/users', UserController.update);
+routes.get('/students', StudentsController.index);
 routes.post('/students', StudentsController.store);
 routes.put('/students/:index', StudentsController.update);
 // rotas para os planos
