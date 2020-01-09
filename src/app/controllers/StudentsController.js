@@ -15,7 +15,7 @@ class StudentsController {
     const students = await Students.findAll({
       where: {
         name: {
-          [Op.like]: `%${name}`,
+          [Op.like]: `%${name}%`,
         },
       },
     });
@@ -112,6 +112,22 @@ class StudentsController {
       weight,
       height,
     });
+  }
+
+  async delete(req, res) {
+    // busca id na req.params http://localhost:3333/student/4 onde 4 = id
+    const { id } = req.params;
+
+    // busca o plano dentro do BD pela primary key que definimos como ID
+    const students = await Students.findByPk(id);
+
+    // verifica se o enrollment com o ID passado existe
+    if (!students) {
+      return res.status(400).json(`Student id: ${id} does not exist`);
+    }
+    students.destroy();
+    // retorna para o usuario
+    return res.json(`Student ${students.id} deleted`);
   }
 }
 
