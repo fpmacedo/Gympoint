@@ -43,7 +43,13 @@ class PlansController {
   }
 
   async index(req, res) {
-    const plans = await Plans.findAll();
+    const { page = 1 } = req.query;
+    const plans = await Plans.findAll({
+      // limita em 20 registros por pagina
+      limit: 20,
+      // faz com que nao seja pulado nenhum registro
+      offset: (page - 1) * 20,
+    });
     return res.json(plans);
   }
 
