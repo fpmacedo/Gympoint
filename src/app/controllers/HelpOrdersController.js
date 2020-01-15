@@ -68,12 +68,17 @@ class HelpOrdersController {
 
   async index(req, res) {
     const { id } = req.params;
-    const help_orders = await HelpOrders.findAll({
-      where: {
-        student_id: id,
-      },
-    });
 
+    if (id) {
+      const help_orders = await HelpOrders.findAll({
+        where: {
+          student_id: id,
+        },
+      });
+      return res.json(help_orders);
+    }
+
+    const help_orders = await HelpOrders.findAll();
     return res.json(help_orders);
   }
 

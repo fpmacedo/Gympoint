@@ -29,7 +29,8 @@ routes.get('/students/:id/checkins', CheckinController.index);
 // rotas para pedidos de ajuda
 routes.post('/students/:id/help-orders', HelpOrdersController.store);
 routes.get('/students/:id/help-orders', HelpOrdersController.index);
-
+routes.get('/help-orders', HelpOrdersController.index);
+routes.post('/help-orders/:id/answer', HelpOrdersController.answer);
 // routes para definir o middleware para todas as rotas daqui para baixo
 routes.use(authMiddleware);
 routes.put('/users', UserController.update);
@@ -48,6 +49,5 @@ routes.put('/enrollments/:id', EnrollmentController.update);
 routes.delete('/enrollments/:id', EnrollmentController.delete);
 
 // rotas para pedidos de ajuda
-routes.post('/help-orders/:id/answer', HelpOrdersController.answer);
 
 export default routes;
