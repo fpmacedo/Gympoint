@@ -68,17 +68,41 @@ class HelpOrdersController {
 
   async index(req, res) {
     const { id } = req.params;
+    const { page = 1 } = req.query;
 
     if (id) {
       const help_orders = await HelpOrders.findAll({
         where: {
           student_id: id,
         },
+        // limita em 20 registros por pagina
+        limit: 20,
+        // faz com que nao seja pulado nenhum registro
+        offset: (page - 1) * 20,
+        include: [
+          {
+            model: Students,
+            as: 'students',
+            attributes: ['name'],
+          },
+        ],
       });
       return res.json(help_orders);
     }
 
-    const help_orders = await HelpOrders.findAll();
+    const help_orders = await HelpOrders.findAll({
+      // limita em 20 registros por pagina
+      limit: 20,
+      // faz com que nao seja pulado nenhum registro
+      offset: (page - 1) * 20,
+      include: [
+        {
+          model: Students,
+          as: 'students',
+          attributes: ['name'],
+        },
+      ],
+    });
     return res.json(help_orders);
   }
 
