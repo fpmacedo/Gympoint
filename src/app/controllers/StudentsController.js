@@ -10,20 +10,29 @@ import Students from '../models/Students';
 // cria a classe que sera exportada
 class StudentsController {
   async index(req, res) {
-    const { name, page = 1 } = req.query;
+    const { name, page } = req.query;
 
+    if (page) {
+      const students = await Students.findAll({
+        where: {
+          name: {
+            [Op.like]: `%${name}%`,
+          },
+        },
+        // limita em 20 registros por pagina
+        limit: 20,
+        // faz com que nao seja pulado nenhum registro
+        offset: (page - 1) * 20,
+      });
+      return res.json(students);
+    }
     const students = await Students.findAll({
       where: {
         name: {
           [Op.like]: `%${name}%`,
         },
       },
-      // limita em 20 registros por pagina
-      limit: 20,
-      // faz com que nao seja pulado nenhum registro
-      offset: (page - 1) * 20,
     });
-
     return res.json(students);
   }
 
