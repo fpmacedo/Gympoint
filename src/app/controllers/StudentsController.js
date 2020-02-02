@@ -10,7 +10,7 @@ import Students from '../models/Students';
 // cria a classe que sera exportada
 class StudentsController {
   async index(req, res) {
-    const { name, page } = req.query;
+    const { name, page, id } = req.query;
 
     if (page) {
       const students = await Students.findAll({
@@ -25,6 +25,12 @@ class StudentsController {
         offset: (page - 1) * 20,
       });
       return res.json(students);
+    }
+    if (id) {
+      // busca o usuario dentro do BD pela primary key que definimos como ID
+      const student = await Students.findByPk(id);
+
+      return res.json(student);
     }
     const students = await Students.findAll({
       where: {
