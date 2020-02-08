@@ -43,7 +43,7 @@ class PlansController {
   }
 
   async index(req, res) {
-    const { page } = req.query;
+    const { page, id } = req.query;
     if (page) {
       const plans = await Plans.findAll({
         // limita em 20 registros por pagina
@@ -52,6 +52,12 @@ class PlansController {
         offset: (page - 1) * 20,
       });
       return res.json(plans);
+    }
+    if (id) {
+      // busca o usuario dentro do BD pela primary key que definimos como ID
+      const plan = await Plans.findByPk(id);
+
+      return res.json(plan);
     }
 
     const plans = await Plans.findAll({});
@@ -64,6 +70,7 @@ class PlansController {
       title: Yup.string().required(),
       duration: Yup.string().required(),
       price: Yup.string().required(),
+      total: Yup.number(),
     });
     // verifica se todos os parametros dentro do schema sao validos
     if (!(await schema.isValid(req.body))) {
