@@ -15,6 +15,7 @@ class PlansController {
       title: Yup.string().required(),
       duration: Yup.string().required(),
       price: Yup.string().required(),
+      totalPrice: Yup.string(),
     });
     // verifica se todos os parametros dentro do schema sao validos
     if (!(await schema.isValid(req.body))) {
